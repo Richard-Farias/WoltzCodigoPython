@@ -16,14 +16,15 @@ objConnect.list()
 objConnect.select(mailbox= 'inbox',readonly=True)
 resposta,idEmail = objConnect.search(None,'All')
 
+listaDoc = []
 #Percorre e-mails na caixa de entrada e decodifca linhas:16 a 20
 for id in idEmail[0].split():   
     result,dates = objConnect.fetch(id,'RFC822')
     txt_email =  dates[0][1]
     txt_email = txt_email.decode('utf-8')
     txt_email = email.message_from_string(txt_email)
-    
-#Percorre partes dos e-mails e verificando se há anexo linhas 22 a 23
+   
+#Percorre partes dos e-mails e verificando se há anexo 
     for part in txt_email.walk():
       if part.get_content_maintype == 'multipart':
          continue
@@ -36,15 +37,22 @@ for id in idEmail[0].split():
 
     # Escrevendo  bináriio do anexo no arquivo
     dateAnx = file.write(part.get_payload(decode=True))
-  
+      
 
-readPdf =  PyPDF2.PdfReader(fileName)
-txt = "" 
+    #readPdf =  PyPDF2.PdfReader(fileName)
+    #txt = "" 
 
-for page in readPdf.pages:
-   txt += page.extract_text()
+    #for page in readPdf.pages:
+    # txt += page.extract_text()
+     #listaDoc.append(txt)
+
+    readPdf =  PyPDF2.PdfReader(fileName)
+    txt = "" 
+
+    for page in readPdf.pages:
+     txt += page.extract_text()
+     listaDoc.append(txt)
+    
  
-connect = genericDAO.connectDao(txt)
+connect = genericDAO.connectDao()
 emailDao.salvarDadosAnexo(connect,txt)
-
-#print(txt)

@@ -6,7 +6,7 @@ database = 'DBA_Testes',
 user = 'root',
 password = '788005') 
 
-def connectDao(stringAnexo):
+def connectDao():
 
     if connect.is_connected():
         print ('Connect Sucessful')
