@@ -3,7 +3,7 @@ from email.header import decode_header
 import email
 
 def lerEmail(objConnect):
-    status, mensagens = objConnect.search(None, '(UNSEEN SUBJECT "Cemig")')
+    status, mensagens = objConnect.search(None, '(UNSEEN SUBJECT "CEMIG FATURA ONLINE")')
 
     if status == 'OK':
         for num in mensagens[0].split():    
